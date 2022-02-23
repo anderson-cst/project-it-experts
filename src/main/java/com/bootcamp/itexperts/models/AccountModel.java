@@ -18,16 +18,17 @@ public class AccountModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false, length = 50)
+	@Column(name = "nameOwner", nullable = false, length = 50)
 	private String nameOwner;
-	@Column(nullable = false, length = 5)
-	private Integer agencyCode;
-	@Column(nullable = false, unique = true, length = 10)
-	private Integer accountCode;
-	@Column(nullable = false, unique = true, length = 1)
-	private Integer digitVerification;
-	@Column(nullable = false, unique = true, length = 20)
-	private Integer registerId;
+	@Column(name = "agencyCode", nullable = false, length = 5)
+	private String agencyCode;
+	@Column(name = "accountCode", nullable = false, unique = true, length = 10)
+	private String accountCode;
+	@Column(name = "verificationDigital", nullable = false, length = 1)
+	private String verificationDigital;
+	@Column(name = "registerId", nullable = false, unique = true, length = 20)
+	private String registerId;
+	
 	
 	
 	public Long getId() {
@@ -42,28 +43,28 @@ public class AccountModel implements Serializable{
 	public void setNameOwner(String nameOwner) {
 		this.nameOwner = nameOwner;
 	}
-	public Integer getAgencyCode() {
+	public String getAgencyCode() {
 		return agencyCode;
 	}
-	public void setAgencyCode(Integer agencyCode) {
+	public void setAgencyCode(String agencyCode) {
 		this.agencyCode = agencyCode;
 	}
-	public Integer getAccountCode() {
+	public String getAccountCode() {
 		return accountCode;
 	}
-	public void setAccountCode(Integer accountCode) {
+	public void setAccountCode(String accountCode) {
 		this.accountCode = accountCode;
 	}
-	public Integer getDigitVerification() {
-		return digitVerification;
+	public String getVerificationDigital() {
+		return verificationDigital;
 	}
-	public void setDigitVerification(Integer digitVerification) {
-		this.digitVerification = digitVerification;
+	public void setVerificationDigital(String verificationDigital) {
+		this.verificationDigital = verificationDigital;
 	}
-	public Integer getRegisterId() {
+	public String getRegisterId() {
 		return registerId;
 	}
-	public void setRegisterId(Integer registerId) {
+	public void setRegisterId(String registerId) {
 		this.registerId = registerId;
 	}
 	

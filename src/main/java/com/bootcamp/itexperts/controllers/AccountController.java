@@ -28,7 +28,7 @@ import com.bootcamp.itexperts.services.AccountService;
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/Account")
 public class AccountController {
-
+	
 	final AccountService accountService;
 
 	public AccountController(AccountService accountService) {

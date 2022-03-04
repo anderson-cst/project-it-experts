@@ -25,9 +25,24 @@ public class AccountDto {
 	//@CPF
 	@Length(max = 20)
 	private String registerId;
+		
+		
+	public AccountDto() {
+	}
+
+	public AccountDto(
+			@NotBlank(message = "Name owner is mandatory, please fill this field") @Length(max = 50) String nameOwner,
+			@NotBlank(message = "Agency code is mandatory, please fill this field") @Length(max = 5) String agencyCode,
+			@NotBlank(message = "Account code is mandatory, please fill this field") @Length(max = 10) String accountCode,
+			@NotBlank(message = "Verification digital is mandatory, please fill this field") @Length(max = 1) String verificationDigital,
+			@NotBlank(message = "CPF is mandatory, please fill this field") @Length(max = 20) String registerId) {
+		this.nameOwner = nameOwner;
+		this.agencyCode = agencyCode;
+		this.accountCode = accountCode;
+		this.verificationDigital = verificationDigital;
+		this.registerId = registerId;
+	}
 	
-		
-		
 	public String getNameOwner() {
 		return nameOwner;
 	}

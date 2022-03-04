@@ -38,7 +38,7 @@ public class AccountHandler {
 	
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<ErroPadrao> handelDataataViolation(DataIntegrityViolationException e, HttpServletRequest request){
+	public ResponseEntity<ErroPadrao> handleDataViolation(DataIntegrityViolationException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 		ErroPadrao erro = new ErroPadrao();
 		erro.setTimeStamp(Instant.now());

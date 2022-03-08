@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.bootcamp.itexperts.models.exceptions.ErroPadrao;
+import com.bootcamp.itexperts.models.exceptions.ErrorDefault;
 
 @RestControllerAdvice
 public class AccountHandler {
@@ -38,9 +38,9 @@ public class AccountHandler {
 	
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<ErroPadrao> handleDataViolation(DataIntegrityViolationException e, HttpServletRequest request){
+	public ResponseEntity<ErrorDefault> handleDataViolation(DataIntegrityViolationException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-		ErroPadrao erro = new ErroPadrao();
+		ErrorDefault erro = new ErrorDefault();
 		erro.setTimeStamp(Instant.now());
 		erro.setStatus(status.value());
 		erro.setError("Please insert valids values");

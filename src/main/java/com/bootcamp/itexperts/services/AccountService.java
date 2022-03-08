@@ -3,9 +3,9 @@ package com.bootcamp.itexperts.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.repositories.AccountRepository;
@@ -13,24 +13,22 @@ import com.bootcamp.itexperts.repositories.AccountRepository;
 @Service
 public class AccountService {
 
-	final AccountRepository accountRepository;
-	
+	@Autowired
+	private AccountRepository accountRepository;	
 	//inserir dependencia card / endereco
 
-	public AccountService(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
-	}
-	
-	
+		
 	@Transactional
 	public AccountModel save(AccountModel accountModel) {
 		return accountRepository.save(accountModel);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<AccountModel> findAll() {
 		return accountRepository.findAll();
 	}
 	
+	@Transactional(readOnly = true)
 	public Optional<AccountModel> findById(Integer id) {
 		return accountRepository.findById(id);
 	}

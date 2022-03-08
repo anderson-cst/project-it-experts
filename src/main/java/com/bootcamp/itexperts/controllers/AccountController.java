@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,15 +24,11 @@ import com.bootcamp.itexperts.services.AccountService;
 
 
 @RestController
-//@CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/api/v1/Account")
+@RequestMapping("/api/v1/accounts")
 public class AccountController {
 	
-	final AccountService accountService;
-
-	public AccountController(AccountService accountService) {
-		this.accountService = accountService;
-	}
+	@Autowired
+	private AccountService accountService;
 	
 	@PostMapping
 	public ResponseEntity<Object> saveAccounts(@RequestBody @Valid AccountDto accountDto){

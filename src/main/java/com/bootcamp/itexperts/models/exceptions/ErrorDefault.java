@@ -2,7 +2,7 @@ package com.bootcamp.itexperts.models.exceptions;
 
 import java.time.Instant;
 
-public class ErroPadrao {
+public class ErrorDefault {
 	
 	private Instant timeStamp;
 	private Integer status;
@@ -11,12 +11,12 @@ public class ErroPadrao {
 	private String path;
 	
 	
-	public ErroPadrao() {
+	public ErrorDefault() {
 		super();
 	}
 
 
-	public ErroPadrao(Instant timeStamp, Integer status, String error, String message, String path) {
+	public ErrorDefault(Instant timeStamp, Integer status, String error, String message, String path) {
 		super();
 		this.timeStamp = timeStamp;
 		this.status = status;

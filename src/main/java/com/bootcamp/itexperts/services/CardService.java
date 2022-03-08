@@ -1,31 +1,75 @@
 package com.bootcamp.itexperts.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.models.CardModel;
+import com.bootcamp.itexperts.models.TypeCardModel;
+import com.bootcamp.itexperts.repositories.AccountRepository;
 import com.bootcamp.itexperts.repositories.CardRepository;
+import com.bootcamp.itexperts.repositories.TypeCardRepository;
 
+@Service
 public class CardService {
 	
-	final CardRepository cardRepository;
-
-	public CardService(CardRepository cardRepository) {
-		this.cardRepository = cardRepository;
-	}
+	@Autowired
+	private CardRepository cardRepository;
 	
+	@Autowired
+	private AccountRepository accountRepository;
+	
+	@Autowired
+	private TypeCardRepository typeCardRepository;
 	
 	@Transactional
 	public CardModel save(CardModel cardModel) {
-		return cardRepository.save(cardModel);
+		AccountModel accountModel = cardModel.getAccountModelId();
+		List<CardModel> cardList = new ArrayList<>();
+		Optional<AccountModel> accountOpt = accountRepository.findById(accountModel.getId());
+						
+		try {
+			
+		cardModel.setAccountModelId(accountOpt.get());
+		cardList.add(cardModel);
+		accountOpt.get().setCardModel(cardList);
+		
+		TypeCardModel typeCardModel = new TypeCardModel(); 
+		//Optional<CardModel>	cardOpt = cardRepository.findById(cardModel.getId());
+		
+		typeCardModel.setName(cardModel.getTypeCardModelId().getName());
+		typeCardModel.setCardModelId(cardModel);
+		typeCardRepository.save(typeCardModel);
+		
+		cardRepository.save(cardModel);
+		
+		}catch (NoSuchElementException e) {
+			throw new RuntimeException("Cliente não encontrado para inserir endereço!");			
+		}catch (DataIntegrityViolationException e) {
+			throw new RuntimeException("Insira valores válidos para entrada");
+		}
+				
+		
+		
+		return cardModel;
+		 
+		
+		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<CardModel> findAll() {
 		return cardRepository.findAll();
 	}
 	
+	@Transactional(readOnly = true)
 	public Optional<CardModel> findById(Integer id) {
 		return cardRepository.findById(id);
 	}

@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="tb_accounts", uniqueConstraints= {
+@Table(name = "TB_ACCOUNTS", uniqueConstraints= {
 		@UniqueConstraint(name="unique_account_code", columnNames= {"account_code"}),
 		@UniqueConstraint(name="unique_register_id", columnNames= {"register_id"})})
 public class AccountModel implements Serializable{
@@ -36,14 +36,12 @@ public class AccountModel implements Serializable{
 	private String verificationDigital;
 	@Column(name = "register_id", nullable = false, length = 20)
 	private String registerId;
-	@OneToMany(mappedBy = "accountModelId", cascade = CascadeType.ALL) //fetch = FetchType.LAZY
-	//@JsonManagedReference
+	@OneToMany(mappedBy = "accountModelId", cascade = CascadeType.ALL)
 	private List<CardModel> cardModel;
 	
 	
 		
 	public AccountModel() {
-		super();
 	}
 
 	public AccountModel(Integer id, String nameOwner, String agencyCode, String accountCode, String verificationDigital,

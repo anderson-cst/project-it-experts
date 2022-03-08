@@ -1,7 +1,7 @@
 package com.bootcamp.itexperts.dtos;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
@@ -10,20 +10,20 @@ public class AccountDto {
 	
 	
 	@NotBlank(message = "Name owner is mandatory, please fill this field")
-	@Length(max = 50)
+	@Size(max = 50)
 	private String nameOwner;
 	@NotBlank(message = "Agency code is mandatory, please fill this field")
-	@Length(max = 5)
+	@Size(max = 5)
 	private String agencyCode;
 	@NotBlank(message = "Account code is mandatory, please fill this field")
-	@Length(max = 10)
+	@Size(max = 10)
 	private String accountCode;
 	@NotBlank(message = "Verification digital is mandatory, please fill this field")
-	@Length(max = 1)
+	@Size(max = 1)
 	private String verificationDigital;
 	@NotBlank(message = "CPF is mandatory, please fill this field")
 	//@CPF
-	@Length(max = 20)
+	@Size(max = 20)
 	private String registerId;
 		
 		

@@ -36,7 +36,7 @@ public class AccountModel implements Serializable{
 	private String verificationDigital;
 	@Column(name = "register_id", nullable = false, length = 20)
 	private String registerId;
-	@OneToMany(mappedBy = "accountModelId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "accountModelId")
 	private List<CardModel> cardModel;
 	
 	
@@ -91,7 +91,7 @@ public class AccountModel implements Serializable{
 	public void setRegisterId(String registerId) {
 		this.registerId = registerId;
 	}
-	@JsonManagedReference
+	
 	public List<CardModel> getCardModel() {
 		return cardModel;
 	}

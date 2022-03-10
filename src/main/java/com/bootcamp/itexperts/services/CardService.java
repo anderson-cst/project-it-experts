@@ -1,12 +1,12 @@
 package com.bootcamp.itexperts.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,41 +32,27 @@ public class CardService {
 	@Transactional
 	public CardModel save(CardModel cardModel) {
 		AccountModel accountModel = cardModel.getAccountModelId();
-		List<CardModel> cardList = new ArrayList<>();
+		TypeCardModel typeCardModel = new TypeCardModel();
 		Optional<AccountModel> accountOpt = accountRepository.findById(accountModel.getId());
 						
 		try {
-			
+		
 		cardModel.setAccountModelId(accountOpt.get());
-		cardList.add(cardModel);
-		accountOpt.get().setCardModel(cardList);
-		
-		TypeCardModel typeCardModel = new TypeCardModel(); 
-		//Optional<CardModel>	cardOpt = cardRepository.findById(cardModel.getId());
-		
-		typeCardModel.setName(cardModel.getTypeCardModelId().getName());
-		typeCardModel.setCardModelId(cardModel);
+		typeCardModel.setName(cardModel.getTypeCardModelId().getName());	
 		typeCardRepository.save(typeCardModel);
-		
-		cardRepository.save(cardModel);
+		cardModel.setTypeCardModelId(typeCardModel);
+		return cardRepository.save(cardModel);
 		
 		}catch (NoSuchElementException e) {
 			throw new RuntimeException("Cliente não encontrado para inserir endereço!");			
 		}catch (DataIntegrityViolationException e) {
 			throw new RuntimeException("Insira valores válidos para entrada");
-		}
-				
-		
-		
-		return cardModel;
-		 
-		
-		
+		}		
 	}
 	
 	@Transactional(readOnly = true)
-	public List<CardModel> findAll() {
-		return cardRepository.findAll();
+	public Page<CardModel> findAll(Pageable pageable) {
+		return cardRepository.findAll(pageable);
 	}
 	
 	@Transactional(readOnly = true)

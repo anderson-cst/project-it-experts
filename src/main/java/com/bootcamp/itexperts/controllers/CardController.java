@@ -1,12 +1,14 @@
 package com.bootcamp.itexperts.controllers;
 
-import java.util.List;
+import java.net.URI;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bootcamp.itexperts.dtos.CardDto;
 import com.bootcamp.itexperts.models.CardModel;
@@ -33,12 +36,17 @@ public class CardController {
 	public ResponseEntity<CardModel> saveCards(@RequestBody @Valid CardDto cardDto){
 		var cardModel = new CardModel();
 		BeanUtils.copyProperties(cardDto, cardModel);
-		return ResponseEntity.status(HttpStatus.CREATED).body(cardService.save(cardModel));		
+		cardService.save(cardModel);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(cardModel.getId()).toUri();
+		return ResponseEntity.created(location).build();		
 	}
 		
 	@GetMapping
-	public ResponseEntity<List<CardModel>> getAllCards(){
-		return ResponseEntity.status(HttpStatus.OK).body(cardService.findAll());
+	public ResponseEntity<Page<CardModel>> getAllCards(Pageable pageable){
+		return ResponseEntity.status(HttpStatus.OK).body(cardService.findAll(pageable));
 	}
 	
 	@GetMapping("/{id}")

@@ -2,11 +2,11 @@ package com.bootcamp.itexperts.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.bootcamp.itexperts.enums.Flag;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -41,15 +40,14 @@ public class CardModel implements Serializable{
 	@Column(name = "flag", nullable = false, length = 45)
 	@Enumerated(EnumType.STRING)
 	private Flag flag;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "account_model_id")
 	private AccountModel accountModelId;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "type_card_model_id")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "type_card_model_id", referencedColumnName = "id")//(unique = true, foreignKey = @ForeignKey(name = "fk_card_type"))
 	private TypeCardModel typeCardModelId;
-	
-	//@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 
 	
 	public CardModel() {
@@ -115,7 +113,7 @@ public class CardModel implements Serializable{
 		this.flag = flag;
 	}
 
-	@JsonBackReference
+	
 	public AccountModel getAccountModelId() {
 		return accountModelId;
 	}
@@ -124,6 +122,7 @@ public class CardModel implements Serializable{
 		this.accountModelId = accountModelId;
 	}
 
+	//@JsonBackReference
 	public TypeCardModel getTypeCardModelId() {
 		return typeCardModelId;
 	}

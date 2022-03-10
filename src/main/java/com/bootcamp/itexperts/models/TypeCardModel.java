@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "TB_TYPE_CARDS")
@@ -20,18 +20,18 @@ public class TypeCardModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "name", nullable = true, length = 45)
+	@Column(name = "name", nullable = false, length = 45)
 	private String name;
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "typeCardModelId")
-	private CardModel cardModelId;
+	@OneToOne(mappedBy = "typeCardModelId")
+	private CardModel cardModel;
 	
 	public TypeCardModel() {
 	}
 
-	public TypeCardModel(Integer id, String name, CardModel cardModelId) {
+	public TypeCardModel(Integer id, String name, CardModel cardModel) {
 		this.id = id;
 		this.name = name;
-		this.cardModelId = cardModelId;
+		this.cardModel = cardModel;
 	}
 
 	public Integer getId() {
@@ -49,12 +49,13 @@ public class TypeCardModel implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public CardModel getCardModelId() {
-		return cardModelId;
+	
+	//@JsonManagedReference
+	public CardModel getCardModel() {
+		return cardModel;
 	}
 
-	public void setCardModelId(CardModel cardModelId) {
-		this.cardModelId = cardModelId;
+	public void setCardModel(CardModel cardModel) {
+		this.cardModel = cardModel;
 	}	
 }

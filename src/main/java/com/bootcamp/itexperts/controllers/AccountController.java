@@ -1,12 +1,14 @@
 package com.bootcamp.itexperts.controllers;
 
-import java.util.List;
+import java.net.URI;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bootcamp.itexperts.dtos.AccountDto;
 import com.bootcamp.itexperts.models.AccountModel;
@@ -34,12 +37,17 @@ public class AccountController {
 	public ResponseEntity<Object> saveAccounts(@RequestBody @Valid AccountDto accountDto){
 		var accountModel = new AccountModel();
 		BeanUtils.copyProperties(accountDto, accountModel);
-		return ResponseEntity.status(HttpStatus.CREATED).body(accountService.save(accountModel));		
+		accountService.save(accountModel);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(accountModel.getId()).toUri();
+		return ResponseEntity.created(location).build();
 	}
 		
 	@GetMapping
-	public ResponseEntity<List<AccountModel>> getAllAccounts(){
-		return ResponseEntity.status(HttpStatus.OK).body(accountService.findAll());
+	public ResponseEntity<Page<AccountModel>> getAllAccounts(Pageable pageable){
+		return ResponseEntity.status(HttpStatus.OK).body(accountService.findAll(pageable));
 	}
 	
 	@GetMapping("/{id}")

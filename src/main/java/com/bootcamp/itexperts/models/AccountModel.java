@@ -3,7 +3,6 @@ package com.bootcamp.itexperts.models;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "TB_ACCOUNTS", uniqueConstraints= {
@@ -97,6 +95,5 @@ public class AccountModel implements Serializable{
 	}
 	public void setCardModel(List<CardModel> cardModel) {
 		this.cardModel = cardModel;
-	}
-
+	}	
 }

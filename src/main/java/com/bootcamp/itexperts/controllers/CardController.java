@@ -1,7 +1,6 @@
 package com.bootcamp.itexperts.controllers;
 
 import java.net.URI;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.bootcamp.itexperts.controllers.mapper.Mapper;
 import com.bootcamp.itexperts.dtos.CardDto;
 import com.bootcamp.itexperts.models.CardModel;
 import com.bootcamp.itexperts.services.CardService;
@@ -32,10 +32,12 @@ public class CardController {
 	@Autowired
 	private CardService cardService;
 	
+	@Autowired
+	private Mapper mapper;
+	
 	@PostMapping
-	public ResponseEntity<CardModel> saveCards(@RequestBody @Valid CardDto cardDto){
-		var cardModel = new CardModel();
-		BeanUtils.copyProperties(cardDto, cardModel);
+	public ResponseEntity<Object> saveCards(@RequestBody @Valid CardDto cardDto){
+		var cardModel = mapper.modelMapper().map(cardDto, CardModel.class);
 		cardService.save(cardModel);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -45,26 +47,26 @@ public class CardController {
 	}
 		
 	@GetMapping
-	public ResponseEntity<Page<CardModel>> getAllCards(Pageable pageable){
-		return ResponseEntity.status(HttpStatus.OK).body(cardService.findAll(pageable));
+	public ResponseEntity<Page<CardDto>> getAllCards(Pageable pageable){
+		return ResponseEntity.ok().body(mapper.cardModelToDtoPage(cardService.findAll(pageable)));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CardModel> getCardsById(@PathVariable(value = "id") Integer id){
-		Optional<CardModel> cardModelOptional = cardService.findById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(cardModelOptional.get());
+	public ResponseEntity<CardDto> getCardsById(@PathVariable(value = "id") Integer id){
+		CardModel cardModel = cardService.findById(id);
+		CardDto cardDto = mapper.modelMapper.map(cardModel, CardDto.class);
+		return ResponseEntity.ok().body(cardDto);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteCards(@PathVariable(value = "id") Integer id){
-		Optional<CardModel> cardModelOptional = cardService.findById(id);
-		cardService.delete(cardModelOptional.get());
-		return ResponseEntity.status(HttpStatus.OK).body("Card deleted successfully"); 
+		CardModel cardModelOpt = cardService.findById(id);
+		cardService.delete(cardModelOpt);
+		return ResponseEntity.ok().body("Card deleted successfully"); 
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateCards(@PathVariable(value = "id") Integer id, @RequestBody @Valid CardDto cardDto){
-		//Optional<AccountModel> accountModelOptional = accountService.findById(id);
 		var cardModel = new CardModel();
 		BeanUtils.copyProperties(cardDto, cardModel);
 		cardModel = cardService.update(cardModel, id);

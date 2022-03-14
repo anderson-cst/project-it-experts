@@ -1,33 +1,34 @@
 package com.bootcamp.itexperts.dtos;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.bootcamp.itexperts.enums.Flag;
 import com.bootcamp.itexperts.models.AccountModel;
+import com.bootcamp.itexperts.models.CardModel;
 import com.bootcamp.itexperts.models.TypeCardModel;
 
 public class CardDto {
 
-	//@NotBlank(message = "Name of card is mandatory, please fill this field")
-	//@Size(max = 128)
+	@NotBlank(message = "Name of card is mandatory, please fill this field")
+	@Size(max = 128)
 	private String name;
-	//@NotBlank(message = "Number of card is mandatory, please fill this field")
-	//@Size(min = 20, max = 20)
+	@NotBlank(message = "Number of card is mandatory, please fill this field")
+	@Size(min = 20, max = 20)
 	private String number;
-	//@NotBlank(message = "Digit code is mandatory, please fill this field")
-	//@Size(max = 5)
+	@NotBlank(message = "Digit code is mandatory, please fill this field")
+	@Size(max = 5)
 	private String digitCode;
-	//@NotBlank(message = "Limit balance is mandatory, please fill this field")
-	//@Size(max = 20)
+	@NotNull(message = "Limit balance is mandatory, please fill this field")
+	@Digits(integer = 14, fraction = 2)
 	private Double limitBalance;
-	//@NotBlank(message = "Flag is mandatory, please select a option - [MASTERCARD] - [VISA] - [ELO]")
-	//@Size(max = 45)
+	@NotNull(message = "Flag is mandatory, please select a option - [MASTERCARD] - [VISA] - [ELO]")
 	private Flag flag;
-	//@NotBlank(message = "Account is mandatory, please fill this field")
-	private AccountModel accountModelId;
-//	@NotBlank(message = "Type Card is mandatory, please fill this field")
-//	@Size(max = 20)
+//	@NotNull(message = "Account is mandatory, please fill this field")
+//	private AccountModel accountModelId;
+	@NotNull(message = "Type Card is mandatory, please fill this field")
 	private TypeCardModel typeCardModelId;
 	 
 			
@@ -38,17 +39,26 @@ public class CardDto {
 			@NotBlank(message = "Name of card is mandatory, please fill this field") @Size(max = 128) String name,
 			@NotBlank(message = "Number of card is mandatory, please fill this field") @Size(min = 20, max = 20) String number,
 			@NotBlank(message = "Digit code is mandatory, please fill this field") @Size(max = 5) String digitCode,
-			@NotBlank(message = "Limit balance is mandatory, please fill this field") @Size(max = 20) Double limitBalance,
-			@NotBlank(message = "Flag is mandatory, please select a option - [MASTERCAR] - [VISA] - [ELO]") @Size(max = 45) Flag flag,
-			@NotBlank(message = "Account is mandatory, please fill this field") @Size(max = 20) AccountModel accountModelId,
-			@NotBlank(message = "Type Card is mandatory, please fill this field") @Size(max = 20) TypeCardModel typeCardModelId) {
+			@NotNull(message = "Limit balance is mandatory, please fill this field") @Digits(integer = 14, fraction = 2) Double limitBalance,
+			@NotNull(message = "Flag is mandatory, please select a option - [MASTERCARD] - [VISA] - [ELO]") Flag flag,
+			@NotNull(message = "Account is mandatory, please fill this field") AccountModel accountModelId,
+			@NotNull(message = "Type Card is mandatory, please fill this field") TypeCardModel typeCardModelId) {
 		this.name = name;
 		this.number = number;
 		this.digitCode = digitCode;
 		this.limitBalance = limitBalance;
 		this.flag = flag;
-		this.accountModelId = accountModelId;
+//		this.accountModelId = accountModelId;
 		this.typeCardModelId = typeCardModelId;
+	}
+
+	public CardDto(CardModel cardModel) {
+		this.name = cardModel.getName();
+		this.number = cardModel.getNumber();
+		this.digitCode = cardModel.getDigitCode();
+		this.limitBalance = cardModel.getLimitBalance();
+		this.flag = cardModel.getFlag();
+		this.typeCardModelId = cardModel.getTypeCardModelId();		
 	}
 
 	public String getName() {
@@ -91,13 +101,13 @@ public class CardDto {
 		this.flag = flag;
 	}
 
-	public AccountModel getAccountModelId() {
-		return accountModelId;
-	}
-
-	public void setAccountModelId(AccountModel accountModelId) {
-		this.accountModelId = accountModelId;
-	}
+//	public AccountModel getAccountModelId() {
+//		return accountModelId;
+//	}
+//
+//	public void setAccountModelId(AccountModel accountModelId) {
+//		this.accountModelId = accountModelId;
+//	}
 
 	public TypeCardModel getTypeCardModelId() {
 		return typeCardModelId; }

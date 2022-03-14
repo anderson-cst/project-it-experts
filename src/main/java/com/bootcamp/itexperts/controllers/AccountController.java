@@ -1,7 +1,6 @@
 package com.bootcamp.itexperts.controllers;
 
 import java.net.URI;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.bootcamp.itexperts.controllers.mapper.Mapper;
 import com.bootcamp.itexperts.dtos.AccountDto;
 import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.services.AccountService;
@@ -33,10 +33,12 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+	@Autowired
+	private Mapper mapper;
+	
 	@PostMapping
-	public ResponseEntity<Object> saveAccounts(@RequestBody @Valid AccountDto accountDto){
-		var accountModel = new AccountModel();
-		BeanUtils.copyProperties(accountDto, accountModel);
+	public ResponseEntity<Object> saveAccounts(@RequestBody @Valid AccountDto accountDto){		
+		var accountModel = mapper.modelMapper().map(accountDto, AccountModel.class);
 		accountService.save(accountModel);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -46,37 +48,29 @@ public class AccountController {
 	}
 		
 	@GetMapping
-	public ResponseEntity<Page<AccountModel>> getAllAccounts(Pageable pageable){
-		return ResponseEntity.status(HttpStatus.OK).body(accountService.findAll(pageable));
+	public ResponseEntity<Page<AccountDto>> getAllAccounts(Pageable pageable){
+		return ResponseEntity.ok().body(mapper.accountModelToDtoPage(accountService.findAll(pageable)));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<AccountModel> getAccountsById(@PathVariable(value = "id") Integer id){
-		Optional<AccountModel> accountModelOptional = accountService.findById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
+	public ResponseEntity<AccountDto> getAccountsById(@PathVariable(value = "id") Integer id){
+		AccountModel accountModel = accountService.findById(id);
+		AccountDto accountDto = mapper.modelMapper.map(accountModel, AccountDto.class);
+		return ResponseEntity.ok().body(accountDto);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteAccounts(@PathVariable(value = "id") Integer id){
-		Optional<AccountModel> accountModelOptional = accountService.findById(id);
-		accountService.delete(accountModelOptional.get());
-		return ResponseEntity.status(HttpStatus.OK).body("Account deleted successfully"); 
+		AccountModel accountModel = accountService.findById(id);
+		accountService.delete(accountModel);
+		return ResponseEntity.ok().body("Account deleted successfully"); 
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateAccounts(@PathVariable(value = "id") Integer id, @RequestBody @Valid AccountDto accountDto){
-		//Optional<AccountModel> accountModelOptional = accountService.findById(id);
 		var accountModel = new AccountModel();		
 		BeanUtils.copyProperties(accountDto, accountModel);
 		accountModel = accountService.update(accountModel, id);
 		return ResponseEntity.status(HttpStatus.OK).body(accountService.save(accountModel));
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

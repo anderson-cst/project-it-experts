@@ -16,6 +16,8 @@ import com.bootcamp.itexperts.models.TypeCardModel;
 import com.bootcamp.itexperts.repositories.AccountRepository;
 import com.bootcamp.itexperts.repositories.CardRepository;
 import com.bootcamp.itexperts.repositories.TypeCardRepository;
+import com.bootcamp.itexperts.services.exceptions.InvalidInputException;
+import com.bootcamp.itexperts.services.exceptions.NotFoundException;
 
 @Service
 public class CardService {
@@ -29,6 +31,7 @@ public class CardService {
 	@Autowired
 	private TypeCardRepository typeCardRepository;
 	
+	
 	@Transactional
 	public CardModel save(CardModel cardModel) {
 		AccountModel accountModel = cardModel.getAccountModelId();
@@ -38,15 +41,16 @@ public class CardService {
 		try {
 		
 		cardModel.setAccountModelId(accountOpt.get());
-		typeCardModel.setName(cardModel.getTypeCardModelId().getName());	
+		typeCardModel = cardModel.getTypeCardModelId();
+//		typeCardModel.setCardModel(cardModel);
 		typeCardRepository.save(typeCardModel);
 		cardModel.setTypeCardModelId(typeCardModel);
 		return cardRepository.save(cardModel);
 		
 		}catch (NoSuchElementException e) {
-			throw new RuntimeException("Cliente não encontrado para inserir endereço!");			
+			throw new NotFoundException("Account Not Found to insert Card!");	
 		}catch (DataIntegrityViolationException e) {
-			throw new RuntimeException("Insira valores válidos para entrada");
+			throw new InvalidInputException("Invalid Input!");
 		}		
 	}
 	
@@ -56,8 +60,9 @@ public class CardService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<CardModel> findById(Integer id) {
-		return cardRepository.findById(id);
+	public CardModel findById(Integer id) {
+		Optional<CardModel> cardModelOpt = cardRepository.findById(id);
+		return cardModelOpt.orElseThrow(()-> new NotFoundException("Card Not Found!"));
 	}
 	
 	@Transactional
@@ -67,13 +72,19 @@ public class CardService {
 	
 	@Transactional
 	public CardModel update(CardModel cardModel, Integer id) {
-		Optional<CardModel> cardModelOptional = cardRepository.findById(id);
-		cardModelOptional.get().setName(cardModel.getName());
-		cardModelOptional.get().setNumber(cardModel.getNumber());
-		cardModelOptional.get().setDigitCode(cardModel.getDigitCode());
-		cardModelOptional.get().setLimitBalance(cardModel.getLimitBalance());
-		//cardModelOptional.get().setAccountId(cardModel.getAccountId());
-		return cardModelOptional.get();
+		try {
+			Optional<CardModel> cardModelOpt = cardRepository.findById(id);
+			cardModelOpt.get().setName(cardModel.getName());
+			cardModelOpt.get().setNumber(cardModel.getNumber());
+			cardModelOpt.get().setDigitCode(cardModel.getDigitCode());
+			cardModelOpt.get().setLimitBalance(cardModel.getLimitBalance());
+			cardModelOpt.get().setFlag(cardModel.getFlag());
+			cardModelOpt.get().setTypeCardModelId(cardModel.getTypeCardModelId());
+			return cardModelOpt.get();			
+		}catch (NoSuchElementException e) {
+			throw new NotFoundException("Card Not Found to Update");	
+	    }
+		
 	}
 	
 

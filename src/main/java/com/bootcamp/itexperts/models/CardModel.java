@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,12 +42,12 @@ public class CardModel implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Flag flag;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_model_id")
+	@ManyToOne//(cascade = CascadeType.ALL)
+	@JoinColumn(name = "account_model_id", foreignKey = @ForeignKey(name = "fk_account_model"))
 	private AccountModel accountModelId;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	//@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "type_card_model_id", referencedColumnName = "id")//(unique = true, foreignKey = @ForeignKey(name = "fk_card_type"))
+	@JoinColumn(name = "type_card_model_id", foreignKey = @ForeignKey(name = "fk_type_card_model"))
 	private TypeCardModel typeCardModelId;
 
 	

@@ -20,12 +20,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.bootcamp.itexperts.config.SwaggerConfig;
 import com.bootcamp.itexperts.controllers.mapper.Mapper;
 import com.bootcamp.itexperts.dtos.AccountDto;
+import com.bootcamp.itexperts.dtos.CardDto;
 import com.bootcamp.itexperts.models.AccountModel;
+import com.bootcamp.itexperts.models.exceptions.ErrorDefault;
 import com.bootcamp.itexperts.services.AccountService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(tags = {SwaggerConfig.ACCOUNT_TAG})
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountController {
@@ -36,6 +44,15 @@ public class AccountController {
 	@Autowired
 	private Mapper mapper;
 	
+	
+	@ApiOperation(value = "Create account with cards associated", 
+			notes = "Insert account with one card or more", 
+			response = AccountDto.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Account created successfully"),
+			@ApiResponse(code = 404, message = "Account not found", response = ErrorDefault.class),
+			@ApiResponse(code = 409, message = "Conflict on request", response = ErrorDefault.class)			
+	})
 	@PostMapping
 	public ResponseEntity<Object> saveAccounts(@RequestBody @Valid AccountDto accountDto){		
 		var accountModel = mapper.modelMapper().map(accountDto, AccountModel.class);
@@ -46,12 +63,30 @@ public class AccountController {
 				.buildAndExpand(accountModel.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
-		
+	
+	
+	@ApiOperation(value = "Return all accounts", 
+			notes = "Return all accounts created", 
+			response = AccountDto.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Account created successfully"),
+			@ApiResponse(code = 404, message = "Account not found", response = ErrorDefault.class),
+			@ApiResponse(code = 409, message = "Conflict on request", response = ErrorDefault.class)			
+	})
 	@GetMapping
 	public ResponseEntity<Page<AccountDto>> getAllAccounts(Pageable pageable){
 		return ResponseEntity.ok().body(mapper.accountModelToDtoPage(accountService.findAll(pageable)));
 	}
 	
+	
+	@ApiOperation(value = "Return accounts by id", 
+			notes = "Put id account to find it", 
+			response = AccountDto.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Account created successfully"),
+			@ApiResponse(code = 404, message = "Account not found", response = ErrorDefault.class),
+			@ApiResponse(code = 409, message = "Conflict on request", response = ErrorDefault.class)			
+	})
 	@GetMapping("/{id}")
 	public ResponseEntity<AccountDto> getAccountsById(@PathVariable(value = "id") Integer id){
 		AccountModel accountModel = accountService.findById(id);
@@ -59,6 +94,15 @@ public class AccountController {
 		return ResponseEntity.ok().body(accountDto);
 	}
 	
+	
+	@ApiOperation(value = "Delete accounts by id", 
+			notes = "Put id account to delete", 
+			response = AccountDto.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Account created successfully"),
+			@ApiResponse(code = 404, message = "Account not found", response = ErrorDefault.class),
+			@ApiResponse(code = 409, message = "Conflict on request", response = ErrorDefault.class)			
+	})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteAccounts(@PathVariable(value = "id") Integer id){
 		AccountModel accountModel = accountService.findById(id);
@@ -66,11 +110,26 @@ public class AccountController {
 		return ResponseEntity.ok().body("Account deleted successfully"); 
 	}
 	
+	
+	@ApiOperation(value = "Update accounts by id", 
+			notes = "Put id account to update, all fields must be filled", 
+			response = AccountDto.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Account created successfully"),
+			@ApiResponse(code = 404, message = "Account not found", response = ErrorDefault.class),
+			@ApiResponse(code = 409, message = "Conflict on request", response = ErrorDefault.class)			
+	})
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateAccounts(@PathVariable(value = "id") Integer id, @RequestBody @Valid AccountDto accountDto){
-		var accountModel = new AccountModel();		
-		BeanUtils.copyProperties(accountDto, accountModel);
+		
+		//BeanUtils.copyProperties(accountDto, accountModel);
+		var accountModel = mapper.modelMapper.map(accountDto, AccountModel.class);
 		accountModel = accountService.update(accountModel, id);
-		return ResponseEntity.status(HttpStatus.OK).body(accountService.save(accountModel));
+		accountService.save(accountModel);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+//				.path("/{id}")
+				.buildAndExpand(accountModel.getId()).toUri();
+		return ResponseEntity.created(location).build();
 	}	
 }

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bootcamp.itexperts.controllers.mapper.Mapper;
 import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.models.CardModel;
 import com.bootcamp.itexperts.models.TypeCardModel;
@@ -35,7 +36,11 @@ public class AccountService {
 	@Autowired
 	private TypeCardRepository typeCardRepository;
 
-		
+	
+	public AccountService(Mapper mapper) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Transactional
 	public AccountModel save(AccountModel accountModel) {
 		
@@ -75,7 +80,7 @@ public class AccountService {
 	
 	@Transactional
 	public void delete(AccountModel accountModel) {
-			accountRepository.delete(accountModel);		
+			accountRepository.delete(accountModel);
 	}
 	
 	@Transactional
@@ -91,10 +96,5 @@ public class AccountService {
 		}catch (NoSuchElementException e) {
 			throw new NotFoundException("Account Not Found to Update");	
 	    }
-	}
-	
-	
-	
-	
-	
+	}	
 }

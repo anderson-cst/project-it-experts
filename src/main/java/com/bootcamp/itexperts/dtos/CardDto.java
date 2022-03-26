@@ -16,10 +16,10 @@ public class CardDto {
 	@Size(max = 128)
 	private String name;
 	@NotBlank(message = "Number of card is mandatory, please fill this field")
-	@Size(min = 20, max = 20)
+	@Size(min = 20, max = 20, message = "Maximum and minimum value are 20 characters")
 	private String number;
 	@NotBlank(message = "Digit code is mandatory, please fill this field")
-	@Size(max = 5)
+	@Size(min = 5, max = 5, message = "Maximum and minimum value are 5 characters")
 	private String digitCode;
 	@NotNull(message = "Limit balance is mandatory, please fill this field")
 	@Digits(integer = 14, fraction = 2)
@@ -33,22 +33,20 @@ public class CardDto {
 	 
 			
 	public CardDto() {
-	}
-
+	}	
+	
 	public CardDto(
 			@NotBlank(message = "Name of card is mandatory, please fill this field") @Size(max = 128) String name,
-			@NotBlank(message = "Number of card is mandatory, please fill this field") @Size(min = 20, max = 20) String number,
-			@NotBlank(message = "Digit code is mandatory, please fill this field") @Size(max = 5) String digitCode,
+			@NotBlank(message = "Number of card is mandatory, please fill this field") @Size(min = 20, max = 20, message = "Maximum and minimum value are 20 characters") String number,
+			@NotBlank(message = "Digit code is mandatory, please fill this field") @Size(min = 5, max = 5, message = "Maximum and minimum value are 5 characters") String digitCode,
 			@NotNull(message = "Limit balance is mandatory, please fill this field") @Digits(integer = 14, fraction = 2) Double limitBalance,
 			@NotNull(message = "Flag is mandatory, please select a option - [MASTERCARD] - [VISA] - [ELO]") Flag flag,
-			@NotNull(message = "Account is mandatory, please fill this field") AccountModel accountModelId,
 			@NotNull(message = "Type Card is mandatory, please fill this field") TypeCardModel typeCardModelId) {
 		this.name = name;
 		this.number = number;
 		this.digitCode = digitCode;
 		this.limitBalance = limitBalance;
 		this.flag = flag;
-//		this.accountModelId = accountModelId;
 		this.typeCardModelId = typeCardModelId;
 	}
 

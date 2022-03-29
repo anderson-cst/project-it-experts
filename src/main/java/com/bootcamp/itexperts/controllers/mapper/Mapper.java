@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import com.bootcamp.itexperts.dtos.AccountDto;
-import com.bootcamp.itexperts.dtos.CardDto;
+import com.bootcamp.itexperts.dtos.RequestAccountDto;
+import com.bootcamp.itexperts.dtos.RequestCardDto;
+import com.bootcamp.itexperts.dtos.ResponseAccountDto;
+import com.bootcamp.itexperts.dtos.ResponseCardDto;
 import com.bootcamp.itexperts.dtos.TypeCardDto;
 import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.models.CardModel;
@@ -21,33 +23,26 @@ public class Mapper {
 	@Bean
 	public ModelMapper modelMapper() {
 				
-		modelMapper.typeMap(AccountDto.class, AccountModel.class).addMappings(map -> map.skip(AccountModel::setId));
-		modelMapper.typeMap(CardDto.class, CardModel.class).addMappings(map -> map.skip(CardModel::setId));
+		modelMapper.typeMap(RequestAccountDto.class, AccountModel.class).addMappings(map -> map.skip(AccountModel::setId));
+		modelMapper.typeMap(RequestCardDto.class, CardModel.class).addMappings(map -> map.skip(CardModel::setId));
 		modelMapper.typeMap(TypeCardDto.class, TypeCardModel.class).addMappings(map -> map.skip(TypeCardModel::setId));
 		return modelMapper;
 	}	
 		
-	public Page<AccountDto> accountModelToDtoPage(Page<AccountModel> accountModel){
-		return accountModel.map(x -> new AccountDto(x));
+	public Page<RequestAccountDto> accountModelToDtoPage(Page<AccountModel> accountModel){
+		return accountModel.map(x -> new RequestAccountDto(x));
 	}
 	
-	public AccountModel accountDtoToModel(AccountDto accountDto) {
-		return modelMapper.map(accountDto, AccountModel.class);
+	public Page<ResponseAccountDto> accountModelToResponseAccountDtoPage(Page<AccountModel> accountModel){
+		return accountModel.map(x -> new ResponseAccountDto(x));
 	}
 	
-	public AccountDto accountModelToDto(AccountModel accountModel) {
-		return modelMapper.map(accountModel, AccountDto.class);
+	
+	public Page<RequestCardDto> cardModelToDtoPage(Page<CardModel> cardModel){
+		return cardModel.map(x -> new RequestCardDto(x));
 	}
 	
-	public Page<CardDto> cardModelToDtoPage(Page<CardModel> cardModel){
-		return cardModel.map(x -> new CardDto(x));
-	}
-	
-	public CardModel cardDtoToModel(CardDto cardDto) {
-		return modelMapper.map(cardDto, CardModel.class);
-	}
-	
-	public CardDto cardModelToDto(CardModel cardModel) {
-		return modelMapper.map(cardModel, CardDto.class);
+	public Page<ResponseCardDto> cardModelToResponseDtoPage(Page<CardModel> cardModel){
+		return cardModel.map(x -> new ResponseCardDto(x));
 	}	
 }

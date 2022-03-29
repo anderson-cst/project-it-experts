@@ -42,7 +42,6 @@ public class CardService {
 		
 		cardModel.setAccountModelId(accountOpt.get());
 		typeCardModel = cardModel.getTypeCardModelId();
-//		typeCardModel.setCardModel(cardModel);
 		typeCardRepository.save(typeCardModel);
 		cardModel.setTypeCardModelId(typeCardModel);
 		return cardRepository.save(cardModel);

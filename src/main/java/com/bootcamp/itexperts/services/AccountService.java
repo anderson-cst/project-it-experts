@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -20,7 +18,6 @@ import com.bootcamp.itexperts.models.TypeCardModel;
 import com.bootcamp.itexperts.repositories.AccountRepository;
 import com.bootcamp.itexperts.repositories.CardRepository;
 import com.bootcamp.itexperts.repositories.TypeCardRepository;
-import com.bootcamp.itexperts.services.exceptions.DeleteNotAllowed;
 import com.bootcamp.itexperts.services.exceptions.InvalidInputException;
 import com.bootcamp.itexperts.services.exceptions.NotFoundException;
 
@@ -38,7 +35,6 @@ public class AccountService {
 
 	
 	public AccountService(Mapper mapper) {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Transactional
@@ -54,7 +50,6 @@ public class AccountService {
 				cardModelFor.setAccountModelId(accountModel);
 				cardRepository.save(cardModelFor);
 				typeCardModel = cardModelFor.getTypeCardModelId();
-//				typeCardModel.setCardModel(cardModelFor);
 				typeCardRepository.save(typeCardModel);
 			}
 			

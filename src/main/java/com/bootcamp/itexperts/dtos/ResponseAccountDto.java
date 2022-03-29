@@ -2,46 +2,25 @@ package com.bootcamp.itexperts.dtos;
 
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.br.CPF;
-
 import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.models.CardModel;
 
-public class AccountDto {
-	
-	
-	@NotBlank(message = "Name owner is mandatory, please fill this field")
-	@Size(max = 50)
+public class ResponseAccountDto {
+
+	private Integer id;
 	private String nameOwner;
-	@NotBlank(message = "Agency code is mandatory, please fill this field")
-	@Size(max = 5)
 	private String agencyCode;
-	@NotBlank(message = "Account code is mandatory, please fill this field")
-	@Size(max = 10)
 	private String accountCode;
-	@NotBlank(message = "Verification digital is mandatory, please fill this field")
-	@Size(max = 1)
 	private String verificationDigital;
-	@NotBlank(message = "CPF is mandatory, please fill this field")
-	@CPF
-	@Size(max = 20)
 	private String registerId;
-
 	private List<CardModel> cardModel;
-		
-	public AccountDto() {
+	
+	public ResponseAccountDto() {
 	}
-
-	public AccountDto(
-			@NotBlank(message = "Name owner is mandatory, please fill this field") @Size(max = 50) String nameOwner,
-			@NotBlank(message = "Agency code is mandatory, please fill this field") @Size(max = 5) String agencyCode,
-			@NotBlank(message = "Account code is mandatory, please fill this field") @Size(max = 10) String accountCode,
-			@NotBlank(message = "Verification digital is mandatory, please fill this field") @Size(max = 1) String verificationDigital,
-			@NotBlank(message = "CPF is mandatory, please fill this field") @Size(max = 20) String registerId,
-			List<CardModel> cardModel) {
+	
+	public ResponseAccountDto(Integer id, String nameOwner, String agencyCode, String accountCode,
+			String verificationDigital, String registerId, List<CardModel> cardModel) {
+		this.id = id;
 		this.nameOwner = nameOwner;
 		this.agencyCode = agencyCode;
 		this.accountCode = accountCode;
@@ -50,7 +29,8 @@ public class AccountDto {
 		this.cardModel = cardModel;
 	}
 
-	public AccountDto(AccountModel accountModel) {
+	public ResponseAccountDto(AccountModel accountModel) {
+		this.id = accountModel.getId();
 		this.nameOwner = accountModel.getNameOwner();
 		this.agencyCode = accountModel.getAgencyCode();
 		this.accountCode = accountModel.getAccountCode();
@@ -58,7 +38,15 @@ public class AccountDto {
 		this.registerId = accountModel.getRegisterId();
 		this.cardModel = accountModel.getCardModel();
 	}
-	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getNameOwner() {
 		return nameOwner;
 	}
@@ -105,9 +93,5 @@ public class AccountDto {
 
 	public void setCardModel(List<CardModel> cardModel) {
 		this.cardModel = cardModel;
-	}
-
-		
-	
-
+	}	
 }

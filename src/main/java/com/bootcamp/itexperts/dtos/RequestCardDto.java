@@ -6,11 +6,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.bootcamp.itexperts.enums.Flag;
-import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.models.CardModel;
 import com.bootcamp.itexperts.models.TypeCardModel;
 
-public class CardDto {
+public class RequestCardDto {
 
 	@NotBlank(message = "Name of card is mandatory, please fill this field")
 	@Size(max = 128)
@@ -26,16 +25,14 @@ public class CardDto {
 	private Double limitBalance;
 	@NotNull(message = "Flag is mandatory, please select a option - [MASTERCARD] - [VISA] - [ELO]")
 	private Flag flag;
-//	@NotNull(message = "Account is mandatory, please fill this field")
-//	private AccountModel accountModelId;
 	@NotNull(message = "Type Card is mandatory, please fill this field")
 	private TypeCardModel typeCardModelId;
 	 
 			
-	public CardDto() {
+	public RequestCardDto() {
 	}	
 	
-	public CardDto(
+	public RequestCardDto(
 			@NotBlank(message = "Name of card is mandatory, please fill this field") @Size(max = 128) String name,
 			@NotBlank(message = "Number of card is mandatory, please fill this field") @Size(min = 20, max = 20, message = "Maximum and minimum value are 20 characters") String number,
 			@NotBlank(message = "Digit code is mandatory, please fill this field") @Size(min = 5, max = 5, message = "Maximum and minimum value are 5 characters") String digitCode,
@@ -50,7 +47,7 @@ public class CardDto {
 		this.typeCardModelId = typeCardModelId;
 	}
 
-	public CardDto(CardModel cardModel) {
+	public RequestCardDto(CardModel cardModel) {
 		this.name = cardModel.getName();
 		this.number = cardModel.getNumber();
 		this.digitCode = cardModel.getDigitCode();
@@ -98,14 +95,6 @@ public class CardDto {
 	public void setFlag(Flag flag) {
 		this.flag = flag;
 	}
-
-//	public AccountModel getAccountModelId() {
-//		return accountModelId;
-//	}
-//
-//	public void setAccountModelId(AccountModel accountModelId) {
-//		this.accountModelId = accountModelId;
-//	}
 
 	public TypeCardModel getTypeCardModelId() {
 		return typeCardModelId; }

@@ -43,6 +43,7 @@ public class HandlerExceptions {
 		return errors;
 	}
 	
+		
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<ErrorConstraint> validantionException(ConstraintViolationException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.BAD_REQUEST;

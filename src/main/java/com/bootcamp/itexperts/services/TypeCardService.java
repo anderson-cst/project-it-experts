@@ -51,19 +51,6 @@ public class TypeCardService {
 			return typeCardModelOpt.get();			
 		}catch (NoSuchElementException e) {
 			throw new NotFoundException("Type Card Not Found to Update");	
-	    }
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	    }		
+	}	
 }

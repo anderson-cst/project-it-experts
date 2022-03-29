@@ -1,27 +1,18 @@
 package com.bootcamp.itexperts.controller;
 
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.bootcamp.itexperts.controllers.AccountController;
 import com.bootcamp.itexperts.controllers.mapper.Mapper;
-import com.bootcamp.itexperts.dtos.AccountDto;
+import com.bootcamp.itexperts.dtos.RequestAccountDto;
 import com.bootcamp.itexperts.enums.Flag;
 import com.bootcamp.itexperts.models.AccountModel;
 import com.bootcamp.itexperts.models.CardModel;
@@ -54,7 +45,7 @@ public class AccountControllerTests {
 	private CardModel cardModel;
 	private static TypeCardModel typeCardModel;
 	private AccountModel accountReturn;
-	private AccountDto accountDto;
+	private RequestAccountDto accountDto;
 	private Optional<AccountModel> accountOpt;
 	
 	
@@ -79,7 +70,7 @@ public class AccountControllerTests {
 		CARD_MODEL_LIST = new ArrayList<CardModel>();
 		CARD_MODEL_LIST.add(cardModel);
 		accountModel = new AccountModel(ID, NAME_OWNER, AGENCY_CODE, ACCOUNT_CODE, VERIFICATION_DIGITAL, REGISTER_ID, CARD_MODEL_LIST);
-		accountDto = new AccountDto(NAME_OWNER, AGENCY_CODE, ACCOUNT_CODE, VERIFICATION_DIGITAL, REGISTER_ID, CARD_MODEL_LIST);
+		accountDto = new RequestAccountDto(NAME_OWNER, AGENCY_CODE, ACCOUNT_CODE, VERIFICATION_DIGITAL, REGISTER_ID, CARD_MODEL_LIST);
 		accountReturn = new AccountModel(ID, NAME_OWNER, AGENCY_CODE, ACCOUNT_CODE, VERIFICATION_DIGITAL, REGISTER_ID, CARD_MODEL_LIST);
 		accountOpt = Optional.of(new AccountModel(ID, NAME_OWNER, AGENCY_CODE, ACCOUNT_CODE, VERIFICATION_DIGITAL, REGISTER_ID, CARD_MODEL_LIST));
 	}

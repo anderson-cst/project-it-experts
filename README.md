@@ -16,6 +16,10 @@
 
 
 
+
+
+<img src="C:\Users\user\Documents\workspace-spring-tool-suite-4-4.13.0.RELEASE\bootcamp-it-experts\Diagrama MySQL.png">
+
 Link para aplicação na AWS
 
 http://projetofinalitexperts-env.eba-xpydwu74.us-east-1.elasticbeanstalk.com/swagger-ui.html#/

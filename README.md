@@ -14,7 +14,16 @@
 - Deploy - AWS Elastic Beanstalk
 - CI / CD - AWS CodePipeline
 
-
+- Endpoints
+  - [POST] /api/v1/clientes
+  - [GET] /api/v1/clientes
+  - [GET] /api/v1/clientes/{id}
+  - [POST] /api/v1/clientes/{cliente_id}/enderecos
+  - [GET] /api/v1/clientes/{cliente_id}/enderecos
+  - [GET] /api/v1/clientes/{cliente_id}/enderecos/{id}
+  - [POST] /api/v1/clientes/{cliente_id}/documentos
+  - [GET] /api/v1/clientes/{cliente_id}/documentos
+  - [GET] /api/v1/clientes/{cliente_id}/documentos/{id}
 
 
 

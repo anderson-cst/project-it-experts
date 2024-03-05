@@ -24,7 +24,6 @@
   - [GET] /api/v1/clientes/{cliente_id}/documentos
   - [GET] /api/v1/clientes/{cliente_id}/documentos/{id}
 
-[Diagrama banco dados it experts.pdf](https://github.com/anderson-cst/project-it-experts/files/14466563/Diagrama.banco.dados.it.experts.pdf)
 
 Link para aplicação na AWS
 

@@ -27,7 +27,7 @@
 
 
 
-<img src="C:\Users\user\Documents\workspace-spring-tool-suite-4-4.13.0.RELEASE\bootcamp-it-experts\Diagrama MySQL.png">
+<img src="Diagrama MySQL.png">
 
 Link para aplicação na AWS
 

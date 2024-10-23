@@ -104,7 +104,7 @@ API Database Model:
 
 <h3>Tecnologias utilizadas:</h3>
 
-- Java 11
+- Java 17
 - Spring DevTools
 - Spring Web
 - Spring Data JPA
@@ -126,9 +126,6 @@ API Database Model:
   - [POST] /api/v1/clientes/{cliente_id}/documentos
   - [GET] /api/v1/clientes/{cliente_id}/documentos
   - [GET] /api/v1/clientes/{cliente_id}/documentos/{id}
-
-
-
 
 
 Link para aplicação na AWS

@@ -1,6 +1,6 @@
 package com.bootcamp.itexperts.controllers;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class TypeCardController {
 	})
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateTypeCards(@PathVariable(value = "id") Integer id, @RequestBody @Valid TypeCardDto typeCardDto){
-		var typeCardModel = new TypeCardModel();
+		TypeCardModel typeCardModel = new TypeCardModel();
 		BeanUtils.copyProperties(typeCardDto, typeCardModel);
 		typeCardModel = typeCardService.update(typeCardModel, id);
 		return ResponseEntity.status(HttpStatus.OK).body(typeCardService.save(typeCardModel));

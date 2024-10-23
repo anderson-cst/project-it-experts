@@ -61,7 +61,7 @@ public class AccountControllerTests {
 	
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.openMocks(this);
+		MockitoAnnotations.initMocks(this);
 		startAccountModel();
 	}
 	

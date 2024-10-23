@@ -64,7 +64,7 @@ public class TypeCardServiceTests {
 	
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.openMocks(this);
+		MockitoAnnotations.initMocks(this);
 		startResources();
 	}
 	

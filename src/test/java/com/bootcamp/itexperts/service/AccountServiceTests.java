@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +27,10 @@ import com.bootcamp.itexperts.repositories.CardRepository;
 import com.bootcamp.itexperts.repositories.TypeCardRepository;
 import com.bootcamp.itexperts.services.AccountService;
 import com.bootcamp.itexperts.services.exceptions.NotFoundException;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class AccountServiceTests {
 	
 	@InjectMocks
@@ -75,7 +78,7 @@ public class AccountServiceTests {
 	
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.openMocks(this);
+		MockitoAnnotations.initMocks(this);
 		startResources();
 	}
 	

@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +20,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.bootcamp.itexperts.models.exceptions.ErrorConstraint;
 import com.bootcamp.itexperts.models.exceptions.ErrorDefault;
+
+import javax.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class HandlerExceptions {

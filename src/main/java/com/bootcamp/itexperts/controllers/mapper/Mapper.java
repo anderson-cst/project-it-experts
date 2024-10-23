@@ -18,10 +18,11 @@ import com.bootcamp.itexperts.models.TypeCardModel;
 public class Mapper {
 
 
-	public ModelMapper modelMapper = new ModelMapper();
+//	public ModelMapper modelMapper = new ModelMapper();
 	
 	@Bean
 	public ModelMapper modelMapper() {
+		ModelMapper modelMapper = new ModelMapper();
 				
 		modelMapper.typeMap(RequestAccountDto.class, AccountModel.class).addMappings(map -> map.skip(AccountModel::setId));
 		modelMapper.typeMap(RequestCardDto.class, CardModel.class).addMappings(map -> map.skip(CardModel::setId));

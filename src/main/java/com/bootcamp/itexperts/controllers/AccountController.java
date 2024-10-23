@@ -2,7 +2,7 @@ package com.bootcamp.itexperts.controllers;
 
 import java.net.URI;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +39,13 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+//	private ModelMapper modelMapper;
+	
+//	@Autowired
+//    public AccountController(ModelMapper modelMapper) {
+//        this.modelMapper = modelMapper;
+//    }
+	
 	@Autowired
 	private Mapper mapper;
 	
@@ -53,7 +60,7 @@ public class AccountController {
 	})
 	@PostMapping
 	public ResponseEntity<Object> saveAccounts(@RequestBody @Valid RequestAccountDto accountDto){		
-		var accountModel = mapper.modelMapper().map(accountDto, AccountModel.class);
+		AccountModel accountModel = mapper.modelMapper().map(accountDto, AccountModel.class);
 		accountService.save(accountModel);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -87,8 +94,8 @@ public class AccountController {
 	})
 	@GetMapping("/{id}")
 	public ResponseEntity<ResponseAccountDto> getAccountsById(@PathVariable(value = "id") Integer id){
-		var accountModel = accountService.findById(id);
-		var responseAccountDto = mapper.modelMapper.map(accountModel, ResponseAccountDto.class);
+		AccountModel accountModel = accountService.findById(id);
+		ResponseAccountDto responseAccountDto = mapper.modelMapper().map(accountModel, ResponseAccountDto.class);
 		return ResponseEntity.ok().body(responseAccountDto);
 	}
 	
@@ -103,7 +110,7 @@ public class AccountController {
 	})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteAccounts(@PathVariable(value = "id") Integer id){
-		var accountModel = accountService.findById(id);
+		AccountModel accountModel = accountService.findById(id);
 		accountService.delete(accountModel);
 		return ResponseEntity.ok().body("Account deleted successfully"); 
 	}
@@ -119,7 +126,7 @@ public class AccountController {
 	})
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateAccounts(@PathVariable(value = "id") Integer id, @RequestBody @Valid RequestAccountDto accountDto){
-		var accountModel = mapper.modelMapper.map(accountDto, AccountModel.class);
+		AccountModel accountModel = mapper.modelMapper().map(accountDto, AccountModel.class);
 		accountModel = accountService.update(accountModel, id);
 		accountService.save(accountModel);
 		URI location = ServletUriComponentsBuilder

@@ -2,7 +2,7 @@ package com.bootcamp.itexperts.controllers;
 
 import java.net.URI;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,7 +56,7 @@ public class CardController {
 	public ResponseEntity<Object> saveCards(
 			@RequestBody @Valid RequestCardDto cardDto, 
 			@PathVariable(value = "accountId") AccountModel accountId){
-		var cardModel = mapper.modelMapper().map(cardDto, CardModel.class);
+		CardModel cardModel = mapper.modelMapper().map(cardDto, CardModel.class);
 		cardModel.setAccountModelId(accountId);
 		cardService.save(cardModel);
 		URI location = ServletUriComponentsBuilder
@@ -91,8 +91,8 @@ public class CardController {
 	})
 	@GetMapping("/cards/{id}")
 	public ResponseEntity<ResponseCardDto> getCardsById(@PathVariable(value = "id") Integer id){
-		var cardModel = cardService.findById(id);
-		var responseCardDto = mapper.modelMapper.map(cardModel, ResponseCardDto.class);
+		CardModel cardModel = cardService.findById(id);
+		ResponseCardDto responseCardDto = mapper.modelMapper().map(cardModel, ResponseCardDto.class);
 		return ResponseEntity.ok().body(responseCardDto);
 	}
 	
@@ -107,7 +107,7 @@ public class CardController {
 	})
 	@DeleteMapping("/cards/{id}")
 	public ResponseEntity<Object> deleteCards(@PathVariable(value = "id") Integer id){
-		var cardModel = cardService.findById(id);
+		CardModel cardModel = cardService.findById(id);
 		cardService.delete(cardModel);
 		return ResponseEntity.ok().body("Card deleted successfully"); 
 	}
@@ -123,7 +123,7 @@ public class CardController {
 	})
 	@PutMapping("/cards/{id}")
 	public ResponseEntity<Object> updateCards(@PathVariable(value = "id") Integer id, @RequestBody @Valid RequestCardDto cardDto){
-		var cardModel = mapper.modelMapper.map(cardDto, CardModel.class);
+		CardModel cardModel = mapper.modelMapper().map(cardDto, CardModel.class);
 		cardModel = cardService.update(cardModel, id);
 		cardService.save(cardModel);
 		URI location = ServletUriComponentsBuilder

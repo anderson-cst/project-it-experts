@@ -67,5 +67,5 @@ jobs:
         with:
           app-name: 'itexperts'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/target/*.zip'
+          package: '${{ github.workspace }}/target/*.jar'
           

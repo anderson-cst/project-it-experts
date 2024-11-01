@@ -48,11 +48,8 @@ jobs:
       - name: List files in target directory 
         run: ls -la ${{ github.workspace }}/target
 
-      - task: ExtractFiles@1
-        inputs:
-          archiveFilePatterns: '**/*.zip' # Variável que aponta para o .zip 
-          destinationFolder: '${{ github.workspace }}/target' # Onde os arquivos serão extraídos
-
+       - name: Extract files 
+         run: unzip ${{ github.workspace }}/target/*.zip -d ${{ github.workspace }}/target
         
       - name: Login to Azure
         uses: azure/login@v2

@@ -47,9 +47,6 @@ jobs:
           name: java-app
       - name: List files in target directory 
         run: ls -la ${{ github.workspace }}/target
-
-       - name: ExtractFiles@1
-         run: unzip ${{ github.workspace }}/target/*.zip -d ${{ github.workspace }}/target
         
       - name: Login to Azure
         uses: azure/login@v2
@@ -64,5 +61,5 @@ jobs:
         with:
           app-name: 'itexperts'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/target/*.jar'
+          package: '${{ github.workspace }}/target/*zip'
           

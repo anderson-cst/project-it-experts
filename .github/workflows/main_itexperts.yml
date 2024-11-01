@@ -40,13 +40,20 @@ jobs:
     permissions:
       id-token: write #This is required for requesting the JWT
 
-    steps:
+    steps:        
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
       - name: List files in target directory 
-        run: ls -la ${{ github.workspace }}/target      
+        run: ls -la ${{ github.workspace }}/target
+
+      - task: ExtractFiles@1
+        inputs:
+          archiveFilePatterns: '**/*.zip' # Variável que aponta para o .zip 
+          destinationFolder: '${{ github.workspace }}/target' # Onde os arquivos serão extraídos
+
+        
       - name: Login to Azure
         uses: azure/login@v2
         with:

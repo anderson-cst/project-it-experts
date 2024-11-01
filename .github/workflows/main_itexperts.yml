@@ -22,8 +22,8 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build and package with Maven
+        run: mvn clean package
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -61,5 +61,5 @@ jobs:
         with:
           app-name: 'itexperts'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/target/*zip'
+          package: '${{ github.workspace }}/target/*.jar'
           

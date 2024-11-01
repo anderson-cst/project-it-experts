@@ -48,7 +48,7 @@ jobs:
       - name: List files in target directory 
         run: ls -la ${{ github.workspace }}/target
 
-       - name: Extract files 
+       - name: ExtractFiles@1
          run: unzip ${{ github.workspace }}/target/*.zip -d ${{ github.workspace }}/target
         
       - name: Login to Azure

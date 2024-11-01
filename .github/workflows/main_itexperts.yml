@@ -60,5 +60,5 @@ jobs:
         with:
           app-name: 'itexperts'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/**/*.jar'
+          package: '${{ github.workspace }}*.jar'
           

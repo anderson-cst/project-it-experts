@@ -46,7 +46,7 @@ jobs:
         with:
           name: java-app
       - name: List files in target directory 
-        run: ls -la ${{ github.workspace }}/target
+        run: ls -la ${{ github.workspace }}
         
       - name: Login to Azure
         uses: azure/login@v2

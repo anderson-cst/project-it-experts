@@ -1,0 +1,5 @@
+com\bootcamp\itexperts\ItexpertsApplicationTests.class
+com\bootcamp\itexperts\controller\AccountControllerTests.class
+com\bootcamp\itexperts\service\AccountServiceTests.class
+com\bootcamp\itexperts\service\TypeCardServiceTests.class
+com\bootcamp\itexperts\service\CardServiceTests.class

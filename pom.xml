@@ -217,7 +217,41 @@
 					</excludes>
 				</configuration>
 			</plugin>
-		</plugins>
+			<plugin> 
+			<groupId>com.microsoft.azure</groupId>  
+			<artifactId>azure-webapp-maven-plugin</artifactId>  
+			<version>2.13.0</version>  
+			<configuration>
+				<schemaVersion>v2</schemaVersion>
+				<subscriptionId>1a521893-2560-43ee-9e3c-626700fcf883</subscriptionId>
+				<resourceGroup>itexpertsGrupoRecursos</resourceGroup>
+				<appName>itexperts</appName>
+				<pricingTier>B1</pricingTier>
+				<region>brazilsouth</region>
+				<runtime>
+				<os>Linux</os>      
+				<webContainer>Java SE</webContainer>
+				<javaVersion>Java 17</javaVersion>
+				</runtime>
+				<deployment>
+				<resources>
+					<resource>
+					<type>jar</type>
+					<directory>${{ github.workspace }}/target</directory>
+					<includes>
+						<include>*.jar</include>
+					</includes>
+					</resource>
+				</resources>
+				</deployment>
+			</configuration>
+			</plugin>
+           <!--  <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin> -->
+        </plugins>
 	</build>
 
 </project>

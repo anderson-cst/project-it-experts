@@ -253,7 +253,6 @@
                 <version>3.12.1</version>
             </plugin> -->
         </plugins>
-		</plugins>
 	</build>
 
 </project>

@@ -43,6 +43,7 @@
 		</dependency>
 		-->
 		
+		
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -252,6 +253,7 @@
                 <version>3.12.1</version>
             </plugin> -->
         </plugins>
+		</plugins>
 	</build>
 
 </project>

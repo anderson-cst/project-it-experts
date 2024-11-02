@@ -55,6 +55,11 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy to Azure Web App 
-        run: mvn azure-webapp:deploy
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'itexperts'
+          slot-name: 'Production'
+          package: '${{ github.workspace }}/target/*.jar'
           
